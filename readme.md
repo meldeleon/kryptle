@@ -12,4 +12,4 @@
 1. Stand up a DB for long term game state storage
    - DynamoDB???
 1. Increase the numbers dramatically
-1. Implement additional operators, modulo and exponents
+1. Implement additional operators, modulo and exponent
