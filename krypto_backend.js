@@ -1,30 +1,3 @@
-import { create, all } from "mathjs"
-const math = create(all)
-const limitedEvaluate = math.evaluate
-math.import(
-  {
-    import: function () {
-      throw new Error("Function import is disabled")
-    },
-    createUnit: function () {
-      throw new Error("Function createUnit is disabled")
-    },
-    evaluate: function () {
-      throw new Error("Function evaluate is disabled")
-    },
-    parse: function () {
-      throw new Error("Function parse is disabled")
-    },
-    simplify: function () {
-      throw new Error("Function simplify is disabled")
-    },
-    derivative: function () {
-      throw new Error("Function derivative is disabled")
-    },
-  },
-  { override: true }
-)
-
 //CLASSES FOR GAME
 
 class Deck {
@@ -97,14 +70,7 @@ function randomDeal(deck) {
   return takenCard[0]
 }
 
-let butts = new Round()
-console.log(butts)
-
-let nums = [1, 3, 5]
-let hand = [1, 2, 3, 12, 15]
-
-// EVALUATION FUNCTIONS
-
+// VALIDATION FUNCTIONS
 function checkIfNumbersInHand(numbers, hand) {
   //check if numbers in hand
   for (let i = 0; i < numbers.length; i++) {
@@ -119,8 +85,7 @@ function checkIfNumbersInHand(numbers, hand) {
     }
   }
 }
-
-function countInstance(number, set) {
+function countInstance(number, hand) {
   let count = 0
   hand.forEach((num) => {
     if (number === num) {
@@ -128,4 +93,11 @@ function countInstance(number, set) {
     }
   })
   return count
+}
+
+//EVALUATION FUNCTIONS
+
+function checkResult(expression, target) {
+  let result = evaluateExpression(expression)
+  return target === result
 }
