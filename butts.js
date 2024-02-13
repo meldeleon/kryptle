@@ -1,11 +1,8 @@
-const butts = ["+", "-", "*", "/", "^"]
-
-butts.forEach((x) => {
-  if (isNaN(parseInt(x))) {
-    console.log("YEEHAW")
-  } else {
-    console.log("NEEHAW")
-  }
-})
-
-// console.log(typeof NaN)
+let butts = 2
+switch (butts) {
+  case 1:
+    let booty = 3
+  case 2:
+    let booty = 3
+    console.log(booty)
+}
