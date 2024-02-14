@@ -3,7 +3,7 @@ const tokens = ["+", "-", "*", "/", "^"]
 
 console.log(reversePolishNotation(butts))
 
-function reversePolishNotation(expr) {
+export function reversePolishNotation(expr) {
   let expressionArr = expr.split(" ")
   let stack = []
   for (let i = 0; i < expressionArr.length; i++) {
