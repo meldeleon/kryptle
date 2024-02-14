@@ -85,7 +85,7 @@ function shuntingYard(expr) {
         throw new Error(`Invalid token: ${token}`)
     }
   }
-  for (let i of input) {
+  for (let i of expr) {
     if (i === " ") continue
 
     handleToken(i)
@@ -98,6 +98,48 @@ function shuntingYard(expr) {
 
   return output
 }
-const input = "1 + 2 * 3 - 4"
-const result = shuntingYard(input)
-console.log(result)
+//RPN
+function reversePolishNotation(expr) {
+  const opSymbols = Object.keys(operators)
+  let expressionArr = expr.split(" ")
+  let stack = []
+  for (let i = 0; i < expressionArr.length; i++) {
+    let currentSymbol = expressionArr[i]
+    //check if number
+    if (!isNaN(parseInt(currentSymbol))) {
+      stack.push(parseInt(currentSymbol))
+    } else if (opSymbols.includes(currentSymbol)) {
+      let y = stack.pop()
+      let x = stack.pop()
+      stack.push(maths(x, y, currentSymbol))
+    }
+  }
+  if (stack.length === 1) {
+    return stack[0]
+  } else {
+    console.error(`${expr} is not a valid RPN expression`)
+  }
+}
+
+function maths(x, y, operand) {
+  switch (operand) {
+    case "+":
+      return x + y
+    case "-":
+      return x - y
+    case "/":
+      return x / y
+    case "*":
+      return x * y
+    case "^":
+    case "**":
+      return x ** y
+    default:
+      break
+  }
+}
+
+const input = "1+2*3-4"
+const rpn = shuntingYard(input)
+const result = reversePolishNotation(rpn)
+console.log({ rpn }, { result })
