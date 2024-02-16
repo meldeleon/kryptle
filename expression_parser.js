@@ -1,8 +1,3 @@
-let test = "1*5+3^2"
-
-let result = reversePolishNotation(shuntingYard(test))
-console.log(result)
-
 const operators = {
   "^": {
     prec: 4,
@@ -28,7 +23,7 @@ const operators = {
 
 //RPN
 function reversePolishNotation(expr) {
-  let expressionArr = expr.split(" ")
+  let expressionArr = expr.trim().split(" ")
   let stack = []
   const opSymbols = Object.keys(operators)
   for (let i = 0; i < expressionArr.length; i++) {
@@ -40,6 +35,7 @@ function reversePolishNotation(expr) {
       let y = stack.pop()
       let x = stack.pop()
       stack.push(maths(x, y, currentSymbol))
+    } else if (currentSymbol === "") {
     } else {
       console.error(`${currentSymbol} is not a valid symbol`)
     }
@@ -83,7 +79,7 @@ function assert(predicate) {
 
 function shuntingYard(expr) {
   const stack = []
-  let output = ""
+  let output = new String()
   const opSymbols = Object.keys(operators)
   //helper functions
   //returns top of stack
@@ -100,16 +96,15 @@ function shuntingYard(expr) {
   }
 
   function handleToken(token) {
+    // console.log({ token })
     switch (true) {
       // if it is a number, add it to output
       case !isNaN(parseInt(token)):
         addToOutput(token)
         break
-
       case opSymbols.includes(token):
         const o1 = token
         let o2 = peek()
-
         while (
           o2 !== undefined &&
           o2 !== "(" &&
@@ -149,6 +144,10 @@ function shuntingYard(expr) {
     assert(peek() !== "(")
     addToOutput(stack.pop())
   }
-
   return output
 }
+
+let test = "1+3^2"
+
+let result = reversePolishNotation(shuntingYard(test))
+console.log(result)

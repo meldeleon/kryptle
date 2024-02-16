@@ -101,7 +101,7 @@ function shuntingYard(expr) {
 //RPN
 function reversePolishNotation(expr) {
   const opSymbols = Object.keys(operators)
-  let expressionArr = expr.split(" ")
+  let expressionArr = expr.split(" ").filter((x) => x !== "")
   let stack = []
   for (let i = 0; i < expressionArr.length; i++) {
     let currentSymbol = expressionArr[i]
