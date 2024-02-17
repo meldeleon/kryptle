@@ -96,45 +96,47 @@ function shuntingYard(expr) {
   }
 
   function handleToken(token) {
-    // console.log({ token })
-    switch (true) {
-      // if it is a number, add it to output
-      case !isNaN(parseInt(token)):
+    // if a token is a number, add it to output
+    if (!isNaN(parseInt(token))){
         addToOutput(token)
-        break
-      case opSymbols.includes(token):
+    } 
+    // if the token is an operator
+    else if (opSymbols.includes(token)){
         const o1 = token
         let o2 = peek()
+        // check to see if we should pop existing operators out of the stack before adding this operator
         while (
-          o2 !== undefined &&
-          o2 !== "(" &&
-          (operators[o2].prec > operators[o1].prec ||
-            (operators[o2].prec === operators[o1].prec &&
-              operators[o1].assoc === "left"))
-        ) {
-          addToOutput(handlePop())
-          o2 = peek()
-        }
+            o2 !== undefined &&
+            o2 !== "(" &&
+            (operators[o2].prec > operators[o1].prec ||
+              (operators[o2].prec === operators[o1].prec &&
+                operators[o1].assoc === "left"))
+          ) {
+            addToOutput(handlePop())
+            o2 = peek()
+          }
+        //then push the operator into the stack
         stack.push(o1)
-        break
-      case token === "(":
+    } 
+    // if the token is left paren push to stack
+    else if (token === "("){
         stack.push(token)
-        break
-      case token === ")":
+    } 
+    else if (token === ")"){
         let topOfStack = peek()
-        while (topOfStack !== "(") {
-          assert(stack.length !== 0)
-          addToOutput(handlePop())
-          topOfStack = peek()
+        while(topOfStack !== "(") {
+            assert(stack.length !==0)
+            addToOutput(handlePop())
+            topOfStack = peek()
         }
-        assert(peek() === "(")
+        assert(peek()=== "(")
         handlePop()
-        break
-      default:
+    } 
+    else {
         throw new Error(`Invalid token: ${token}`)
-    }
-  }
-  for (let i of expr) {
+    } 
+}
+for (let i of expr) {
     if (i === " ") continue
 
     handleToken(i)
@@ -147,7 +149,7 @@ function shuntingYard(expr) {
   return output
 }
 
-let test = "1+3^2"
-
-let result = reversePolishNotation(shuntingYard(test))
-console.log(result)
+let test = "3+4*2/(1-5)^2^3"
+let shuntingYardResult = shuntingYard(test)
+let result = reversePolishNotation(shuntingYardResult)
+console.log({shuntingYardResult}, {result})

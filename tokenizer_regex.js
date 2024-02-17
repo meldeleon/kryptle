@@ -1,3 +1,16 @@
+class Tokenizer {
+  constructor(input) {
+    this.input = input,
+    this.cursor = 0
+  }
+  hasMoreTokesn(){
+    return this.cursor < this.input.length
+  }
+}
+
+
+
+
 const TokenTypes = {
   NUMBER: "NUMBER",
   ADDITION: "+",
@@ -16,4 +29,7 @@ const TokenSpec = [
   [/^\-/, TokenTypes.SUBTRACTION],
   [/^\*/, TokenTypes.MULTIPLICATION],
   [/^\//, TokenTypes.DIVISION],
+  [/^\^/, TokenTypes.EXPONENTIATION],
+  [/^\(/, TokenTypes.PARENTHESIS_LEFT],
+  [/^\)/, TokenTypes.PARENTHESIS_RIGHT],
 ]
