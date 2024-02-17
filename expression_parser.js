@@ -122,6 +122,7 @@ function shuntingYard(expr) {
     else if (token === "("){
         stack.push(token)
     } 
+    // if the token is right paren, as long as the top of the stack is not left paren and the stack i not empty -- pop the operator from stack and add to output string (things within parentheses take precedent)
     else if (token === ")"){
         let topOfStack = peek()
         while(topOfStack !== "(") {
