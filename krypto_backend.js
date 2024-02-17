@@ -1,5 +1,5 @@
 //CLASSES FOR GAME
-
+// A deck are all the possible numbers that can be populated to krypto
 class Deck {
   constructor() {
     let deck = new Array()
@@ -28,6 +28,7 @@ class Deck {
   }
 }
 
+// A hand are the selected numbers for a particular puzzle.
 class Hand {
   constructor(cards) {
     this.cards = cards
@@ -40,6 +41,7 @@ class Hand {
   }
 }
 
+// A target is the target number that you are trying to arrive to.
 class Target {
   constructor(card) {
     this.card = card
@@ -49,6 +51,7 @@ class Target {
   }
 }
 
+// A round contains the deck, and the hand that it deals.
 class Round {
   constructor(deck, hands) {
     let roundDeck = new Deck()
