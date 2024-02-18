@@ -1,73 +1,87 @@
-export {reversePolishNotation}
-//RPN
+export { reversePolishNotation };
+
+// Define the operators with their precedence and associativity
 const operators = {
-    "^": {
-      prec: 4,
-      assoc: "right",
-    },
-    "*": {
-      prec: 3,
-      assoc: "left",
-    },
-    "/": {
-      prec: 3,
-      assoc: "left",
-    },
-    "+": {
-      prec: 2,
-      assoc: "left",
-    },
-    "-": {
-      prec: 2,
-      assoc: "left",
-    },
-  }
+  "^": {
+    precedence: 4,
+    associativity: "right",
+  },
+  "*": {
+    precedence: 3,
+    associativity: "left",
+  },
+  "/": {
+    precedence: 3,
+    associativity: "left",
+  },
+  "+": {
+    precedence: 2,
+    associativity: "left",
+  },
+  "-": {
+    precedence: 2,
+    associativity: "left",
+  },
+};
 
-
+/**
+ * Evaluates an expression written in reverse Polish notation (RPN).
+ * @param {string} expr The RPN expression as a string.
+ * @returns {number} The result of the expression.
+ */
 function reversePolishNotation(expr) {
-  let expressionArr = expr.trim().split(" ")
-  let stack = []
-  const opSymbols = Object.keys(operators)
-  for (let i = 0; i < expressionArr.length; i++) {
-    let currentSymbol = expressionArr[i]
-    //check if number
+  let expressionArr = expr.trim().split(" ");
+  let stack = [];
+  const opSymbols = Object.keys(operators);
+
+  expressionArr.forEach((currentSymbol) => {
     if (!isNaN(parseInt(currentSymbol))) {
-      stack.push(parseInt(currentSymbol))
+      // If the current symbol is a number, push it to the stack
+      stack.push(parseInt(currentSymbol));
     } else if (opSymbols.includes(currentSymbol)) {
-      let y = stack.pop()
-      let x = stack.pop()
-      stack.push(maths(x, y, currentSymbol))
-    } else if (currentSymbol === "") {
-    } else {
-      console.error(`${currentSymbol} is not a valid symbol`)
+      // If the current symbol is an operator, pop two numbers from the stack,
+      // perform the operation, and push the result back onto the stack
+      let y = stack.pop();
+      let x = stack.pop();
+      if (x === undefined || y === undefined) {
+        console.error("Insufficient values in the expression.");
+        return;
+      }
+      stack.push(performOperation(x, y, currentSymbol));
+    } else if (currentSymbol !== "") {
+      // If the symbol is not recognized, log an error
+      console.error(`${currentSymbol} is not a valid symbol`);
     }
-  }
+  });
+
   if (stack.length === 1) {
-    return stack[0]
+    return stack[0];
   } else {
-    console.error(`${expr} is not a valid RPN expression`)
+    console.error(`${expr} is not a valid RPN expression`);
   }
 }
 
-function maths(x, y, operand) {
+/**
+ * Performs the mathematical operation indicated by the operand on two numbers.
+ * @param {number} x The first number.
+ * @param {number} y The second number.
+ * @param {string} operand The operator symbol.
+ * @returns {number} The result of the operation.
+ */
+function performOperation(x, y, operand) {
   switch (operand) {
     case "+":
-      return x + y
-      break
+      return x + y;
     case "-":
-      return x - y
-      break
+      return x - y;
     case "/":
-      return x / y
-      break
+      return x / y;
     case "*":
-      return x * y
-      break
+      return x * y;
     case "^":
-    case "**":
-      return x ** y
-      break
+      return Math.pow(x, y);
     default:
-      console.error(`${operand} is not a valid operator`)
+      console.error(`${operand} is not a valid operator`);
+      return 0; // Return 0 for unrecognized operators
   }
 }
